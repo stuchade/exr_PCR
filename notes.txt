@@ -1,0 +1,2 @@
+Stáhla jsem si .NET z internetu. Pomocí příkazu dotnet new webapi -o TelecomBackend jsem si vytvořila složku TelecomBacked s šablonou na jendoduchou webovku.
+V C# jsem si vytvořila dvě tabulky pro databázi.
