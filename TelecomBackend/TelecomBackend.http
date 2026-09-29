@@ -1,4 +1,4 @@
-@TelecomBackend_HostAddress = http://localhost:5189
+@TelecomBackend_HostAddress = http://localhost:5065
 
 GET {{TelecomBackend_HostAddress}}/weatherforecast/
 Accept: application/json

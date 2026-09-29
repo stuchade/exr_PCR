@@ -1,52 +1,44 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using TelecomBackend.data;
+using System.Data;
+using Dapper;
+using Microsoft.Data.Sqlite;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=database.db"));
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+string connectionString = "Data Source=database.db";
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
+
+using (var connection = new SqliteConnection(connectionString))
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
+    connection.Open();
+    connection.Execute("PRAGMA foreign_keys = ON;");
+
+    if (File.Exists("tables.sql"))
+    {
+        string sqlScript = File.ReadAllText("tables.sql");
+        connection.Execute(sqlScript);
+    }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 
-var summaries = new[]
+var testData = new List<Logs>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    new Logs { TripName = "Testovací výlet", CreatedAt = DateTime.Now }
 };
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+DatabaseService.InsertLogs(testData);
+// DatabaseService.DeleteLogs(1);
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
