@@ -7,12 +7,19 @@ CREATE TABLE IF NOT EXISTS logs (
 CREATE TABLE IF NOT EXISTS log_points (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     trip_id INTEGER NOT NULL,
-    measured_at DATETIME NOT NULL,
+    measured_at_gps DATETIME NOT NULL,
     lat REAL NOT NULL,
     lon REAL NOT NULL,
-    short_cell_id INTEGER,
-    signal_strength INTEGER, 
-    speed REAL, 
+    altitude REAL,
+    speed REAL,
+    mcc INTEGER,
+    mnc INTEGER,
+    cell_id BIGINT,
+    dbm INTEGER,
+    ta INTEGER,
+    accuracy REAL,
+    bearing REAL,
+    measured_at_bts DATETIME,
     net_type varchar(50),
 
     FOREIGN KEY (trip_id) REFERENCES logs(id) ON DELETE CASCADE
