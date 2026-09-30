@@ -2,6 +2,8 @@ using System.Data;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
+namespace TelecomBackend;
+
 public static class DatabaseService
 {
     private static string connectionString = "Data Source=database.db";
@@ -15,12 +17,29 @@ public static class DatabaseService
         return connection;
     }
 
-    public static void InsertLogs(List<Logs> logs)
+    public static int InsertLog(string gpxPath)
     {
-        string sql = "INSERT INTO logs (trip_name, created_at) VALUES (@TripName, @CreatedAt);";
+        Logs log = DataProcessing.GetLogsData(gpxPath);
+        string sql = @"INSERT INTO logs (trip_name, created_at) VALUES (@TripName, @CreatedAt);
+                        SELECT last_insert_rowid();";
         using (var connection = GetConnection())
         {
-            connection.Execute(sql, logs);
+            return connection.QuerySingle<int>(sql, log);
+        }
+    }
+
+    public static void InsertLogPoints(string csvPath, string gpxPath, int logId)
+    {
+        List<LogPoints> logpoints = DataProcessing.GetLogPointsData(csvPath, gpxPath, logId);
+        string sql = @"INSERT INTO log_points (trip_id, measured_at_gps, lat, lon, altitude, speed, mcc, mnc, cell_id, dbm, ta, accuracy, bearing, measured_at_bts, net_type) 
+                    VALUES (@TripId, @MeasuredAtGps, @Lat, @Lon, @Altitude, @Speed, @Mcc, @Mnc, @CellId, @Dbm, @Ta, @Accuracy, @Bearing, @MeasuredAtBts, @NetType)";
+        using (var connection = GetConnection())
+        {
+            using (var trasaction = connection.BeginTransaction())
+            {
+                connection.Execute(sql, logpoints, transaction: trasaction);
+                trasaction.Commit();
+            }
         }
     }
 
