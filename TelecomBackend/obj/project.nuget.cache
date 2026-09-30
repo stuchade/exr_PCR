@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ael0dDf7lJI=",
+  "dgSpecHash": "Ox0U46fbvU0=",
   "success": true,
   "projectFilePath": "C:\\Users\\adast\\work\\exr_PCR\\TelecomBackend\\TelecomBackend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\adast\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\adast\\.nuget\\packages\\dapper\\2.1.89\\dapper.2.1.89.nupkg.sha512",
     "C:\\Users\\adast\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
     "C:\\Users\\adast\\.nuget\\packages\\microsoft.data.sqlite\\10.0.12\\microsoft.data.sqlite.10.0.12.nupkg.sha512",

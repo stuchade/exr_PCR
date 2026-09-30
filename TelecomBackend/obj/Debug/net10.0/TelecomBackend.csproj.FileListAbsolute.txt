@@ -62,3 +62,4 @@ C:\Users\adast\work\exr_PCR\TelecomBackend\obj\Debug\net10.0\refint\TelecomBacke
 C:\Users\adast\work\exr_PCR\TelecomBackend\obj\Debug\net10.0\TelecomBackend.pdb
 C:\Users\adast\work\exr_PCR\TelecomBackend\obj\Debug\net10.0\TelecomBackend.genruntimeconfig.cache
 C:\Users\adast\work\exr_PCR\TelecomBackend\obj\Debug\net10.0\ref\TelecomBackend.dll
+C:\Users\adast\work\exr_PCR\TelecomBackend\bin\Debug\net10.0\CsvHelper.dll
