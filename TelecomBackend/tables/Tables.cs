@@ -1,11 +1,15 @@
+namespace TelecomBackend;
+
 public class Logs
 {
+    public int Id {get; set;        }
     public string TripName {get; set; } = string.Empty;
     public DateTime CreatedAt {get; set; }
 }
 
 public class LogPoints
 {
+    public int Id {get; set;}
     public int TripId { get; set; }
     public DateTime MeasuredAtGps { get; set; }
     public double Lat { get; set; }

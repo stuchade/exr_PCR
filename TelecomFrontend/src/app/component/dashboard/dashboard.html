@@ -1,0 +1,20 @@
+<div class="dashboard-conteiner">
+    <app-map class="map-layer"></app-map>
+
+    <div class="sidebar-layer">
+        <app-logs (openUload)="isUploadOpen = true"></app-logs>
+    </div>
+
+    @if (isUploadOpen) {
+        <div class="modal-overlay">
+            <app-upload (closeModal)="isUploadOpen = false"></app-upload>
+        </div>
+
+    }
+
+    <!-- @if (selectedPoint) {
+        <div class="detail-layer">
+            <app-point-detail [point]="selectedPoint" (closeDetail)="selectedPoint = null"></app-point-detail>
+        </div>
+    } -->
+</div>

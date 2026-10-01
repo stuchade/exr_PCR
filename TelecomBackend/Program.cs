@@ -6,22 +6,35 @@ using TelecomBackend;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddControllers();
 
 string connectionString = "Data Source=database.db";
 
 var app = builder.Build();
+
+app.UseCors("AllowAngular");
 
 using (var connection = new SqliteConnection(connectionString))
 {
     connection.Open();
     connection.Execute("PRAGMA foreign_keys = ON;");
 
-    if (File.Exists("tables.sql"))
+    if (File.Exists("tables\\tables.sql"))
     {
-        string sqlScript = File.ReadAllText("tables.sql");
+        string sqlScript = File.ReadAllText("tables\\tables.sql");
         connection.Execute(sqlScript);
     }
 }
@@ -39,8 +52,8 @@ app.MapControllers();
 // {
 //     new Logs { TripName = "Testovací výlet", CreatedAt = DateTime.Now }
 // };
-var id = DatabaseService.InsertLog("trasy\\trip1.gpx");
-DatabaseService.InsertLogPoints("trasy\\trip1.csv", "trasy\\trip1.gpx", id);
+// var id = DatabaseService.InsertLog("trasy\\trip1.gpx");
+// DatabaseService.InsertLogPoints("trasy\\trip1.csv", "trasy\\trip1.gpx", id);
 // DatabaseService.DeleteLogs(1);
 // List<CSVData> csvData = DataProcessing.GetCSVData("trasy\\trip1.csv");
 
