@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, inject } from '@angular/core';
+import { Component, AfterViewInit, inject, input, effect } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
 
@@ -9,13 +9,27 @@ import * as L from 'leaflet';
   styleUrl: './map.css'
 })
 export class Map implements AfterViewInit {
+  tripId = input<number>();
+
+  constructor() {
+    effect(() => {
+      const id = this.tripId();
+      if (id) {
+        this.loadTripPointsFromBackend(id);
+      }
+    });
+  }
+
+
   private map: L.Map | undefined;
   private http = inject(HttpClient);
+
+  private tripLayer = L.layerGroup();
 
   private defaultLat = 50.0755;
   private defaultLon = 14.4378
 
-  // Initialize the map
+  
   private initMap(): void {
 
     const defaultIcon = L.icon({
@@ -36,40 +50,47 @@ export class Map implements AfterViewInit {
     }
 
     // Create map centered at a default location
-    this.map = L.map('map').setView([this.defaultLat, this.defaultLon], 10);
+    this.map = L.map('map', {zoomControl: false}).setView([this.defaultLat, this.defaultLon], 10);
+
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(this.map);
 
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
-    
-    // Add markers for each location
-    this.loadTripPointsFromBacked(1);
+
+    this.tripLayer.addTo(this.map);
   }
 
-  private loadTripPointsFromBacked(tripId: number): void {
+  loadTripPointsFromBackend(tripId: number): void {
     this.http.get<any[]>(`http://localhost:5065/api/logs/${tripId}/points`).subscribe({
       next: (points) => {
+        this.tripLayer.clearLayers();
+
         if (!points || points.length === 0) {
           console.info("No point!")
           return;
         }
+
+
         const pathCoordinates: L.LatLngExpression[] = [];
 
         points.forEach((point) => {
           pathCoordinates.push([point.lat, point.lon]);
 
           L.circleMarker([point.lat, point.lon], {
-            radius: 8,
+            radius: 6,
             color: '#0f1c54',
             fillColor: '#2d2878',
             fillOpacity: 0.9,
             weight: 2
-          }).addTo(this.map!)
+          }).addTo(this.tripLayer)
           .bindPopup(`<b>Cell ID:</b> ${point.cellId ?? 'Neznámé'}<br><b>Rychlost:</b> ${point.speed ?? 0} m/s`);
         });
 
-        L.polyline(pathCoordinates, { color: '#9b38d4', weight: 8, interactive: false, opacity: 0.4}).addTo(this.map!);
+        L.polyline(pathCoordinates, { color: '#9b38d4', weight: 3, interactive: false, opacity: 0.8}).addTo(this.tripLayer);
 
         this.map!.fitBounds(L.latLngBounds(pathCoordinates));
       },
@@ -79,7 +100,6 @@ export class Map implements AfterViewInit {
     });
   }
 
-  // Lifecycle hook to initialize the map after the view is loaded
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.initMap();
