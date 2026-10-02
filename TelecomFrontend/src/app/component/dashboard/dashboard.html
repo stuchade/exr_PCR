@@ -1,9 +1,10 @@
 <div class="dashboard-conteiner">
-    <app-map class="map-layer"></app-map>
-
     <div class="sidebar-layer">
-        <app-logs (openUload)="isUploadOpen = true"></app-logs>
+        <app-logs (openUload)="isUploadOpen = true" (tripSelected)="selectedId = $event"></app-logs>
     </div>
+
+    <app-map class="map-layer" [tripId]="selectedId"></app-map>
+
 
     @if (isUploadOpen) {
         <div class="modal-overlay">
