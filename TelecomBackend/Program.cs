@@ -52,8 +52,10 @@ app.MapControllers();
 // {
 //     new Logs { TripName = "Testovací výlet", CreatedAt = DateTime.Now }
 // };
-// var id = DatabaseService.InsertLog("trasy\\trip1.gpx");
-// DatabaseService.InsertLogPoints("trasy\\trip1.csv", "trasy\\trip1.gpx", id);
+// var id1 = DatabaseService.InsertLog("trasy\\trip1.gpx");
+// DatabaseService.InsertLogPoints("trasy\\trip1.csv", "trasy\\trip1.gpx", id1);
+// var id2 = DatabaseService.InsertLog("trasy\\trip2.gpx");
+// DatabaseService.InsertLogPoints("trasy\\trip2.csv", "trasy\\trip2.gpx", id2);
 // DatabaseService.DeleteLogs(1);
 // List<CSVData> csvData = DataProcessing.GetCSVData("trasy\\trip1.csv");
 
