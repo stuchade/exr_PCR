@@ -1,0 +1,31 @@
+.logs-container {
+    background-color: rgb(251, 249, 249);
+    border: 1px solid rgb(251, 249, 249);
+    border-radius: 8px;
+    padding: 16px;
+    width: 200px;
+    height: 100%;
+    box-shadow: 0 16px 16px rgba(0, 0, 0, 0.1);
+}
+
+
+.logs-header h3 {
+    margin-top: 1px;
+}
+
+.logs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.log-button {
+    color: black !important;
+    background-color: white !important;
+    border: 1px solid white !important;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
