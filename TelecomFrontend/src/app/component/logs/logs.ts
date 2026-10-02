@@ -32,10 +32,6 @@ export class Logs implements OnInit {
     }
   }
 
-  private showLogs(logs: any[]): void {
-    
-  }
-
   private loadLogsFromBackend(): void {
     this.buttons = [];
     this.http.get<any[]>(`http://localhost:5065/api/logs`).subscribe({
