@@ -78,7 +78,7 @@ public static class DataProcessing
 
         string? timeText = gpxDoc.Root?.Element(gpx + "time")?.Value;
         DateTime gpxTime = DateTime.TryParse(timeText, out DateTime parsed) ? parsed : DateTime.Now;
-        string gpxName = gpxDoc.Root?.Element(gpx + "name")?.Value ?? "Trip_" + timeText;
+        string gpxName = gpxDoc.Root?.Element(gpx + "desc")?.Value ?? "Trip_" + timeText;
 
         // List<Logs> logs = new List<Logs>();
         Logs log = new Logs
