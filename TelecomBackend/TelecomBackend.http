@@ -1,7 +1,5 @@
 @TelecomBackend_HostAddress = http://localhost:5065
 
-Access-Control-Allow-Origin: http://localhost:4200
-
 GET {{TelecomBackend_HostAddress}}/api/logs
 Accept: application/json
 
