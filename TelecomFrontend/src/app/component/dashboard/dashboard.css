@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-/* Mapa zabírá celé okno na pozadí */
+
 .map-layer {
   position: absolute;
   top: 0;
@@ -15,15 +15,15 @@
   z-index: 1;
 }
 
-/* Boxík se seznamem výletů vlevo nahoře nad mapou */
 .sidebar-layer {
   position: absolute;
   top: 20px;
   left: 20px;
+  width: 15%;
+  height: 40%;
   z-index: 10;
 }
 
-/* Ztmavlé pozadí pro vyskakovací okno uprostřed */
 .modal-overlay {
   position: absolute;
   top: 0;
@@ -37,7 +37,6 @@
   z-index: 100;
 }
 
-/* Detail bodu vpravo nahoře nebo dole */
 .detail-layer {
   position: absolute;
   top: 20px;
