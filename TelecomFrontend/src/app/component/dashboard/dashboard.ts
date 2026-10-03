@@ -13,6 +13,6 @@ import { PointDetail } from '../point-detail/point-detail';
 })
 export class Dashboard {
   isUploadOpen: boolean = false;
-  selectedPoint: any = null;
+  selectedPoint?: any = null;
   selectedId?: number;
 }
