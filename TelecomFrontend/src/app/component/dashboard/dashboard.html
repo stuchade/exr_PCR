@@ -3,7 +3,7 @@
         <app-logs (openUload)="isUploadOpen = true" (tripSelected)="selectedId = $event"></app-logs>
     </div>
 
-    <app-map class="map-layer" [tripId]="selectedId"></app-map>
+    <app-map class="map-layer" [tripId]="selectedId" (point)="selectedPoint = $event"></app-map>
 
 
     @if (isUploadOpen) {
@@ -13,9 +13,9 @@
 
     }
 
-    <!-- @if (selectedPoint) {
+    @if (selectedPoint) {
         <div class="detail-layer">
-            <app-point-detail [point]="selectedPoint" (closeDetail)="selectedPoint = null"></app-point-detail>
+            <app-point-detail [pnt]="selectedPoint"></app-point-detail>
         </div>
-    } -->
+    }
 </div>
