@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, inject, input, effect } from '@angular/core';
+import { Component, AfterViewInit, inject, input, effect, output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
 
@@ -10,6 +10,7 @@ import * as L from 'leaflet';
 })
 export class Map implements AfterViewInit {
   tripId = input<number>();
+  point = output<any>();
 
   constructor() {
     effect(() => {
@@ -64,7 +65,7 @@ export class Map implements AfterViewInit {
     this.tripLayer.addTo(this.map);
   }
 
-  loadTripPointsFromBackend(tripId: number): void {
+  public loadTripPointsFromBackend(tripId: number): void {
     this.http.get<any[]>(`http://localhost:5065/api/logs/${tripId}/points`).subscribe({
       next: (points) => {
         this.tripLayer.clearLayers();
@@ -87,7 +88,10 @@ export class Map implements AfterViewInit {
             fillOpacity: 0.9,
             weight: 2
           }).addTo(this.tripLayer)
-          .bindPopup(`<b>Cell ID:</b> ${point.cellId ?? 'Neznámé'}<br><b>Rychlost:</b> ${point.speed ?? 0} m/s`);
+          .bindPopup(`<b>Cell ID:</b> ${point.cellId ?? 'Neznámé'}<br><b>Rychlost:</b> ${point.speed ?? 0} m/s`)
+          .on('click', () => {
+            this.point.emit(point);
+          });
         });
 
         L.polyline(pathCoordinates, { color: '#9b38d4', weight: 3, interactive: false, opacity: 0.8}).addTo(this.tripLayer);
