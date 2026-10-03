@@ -1,1 +1,16 @@
-<p>point-detail works!</p>
+<div class="point-detail-cotainer">
+    <h3>Detail výletu</h3>
+    <p>Výlet: {{logPoint?.tripId}}</p>
+    <p>Datum měření bodu: {{logPoint?.measuredAtGps}}</p>
+    <p>Souřadnice bodu: {{logPoint?.lat}} | {{logPoint?.lon}}</p>
+    <p>Přesnost polohy: {{logPoint?.accuracy}} m</p>
+    <p>Identifikační číslo věže: {{logPoint?.cellId}}</p>
+    <p>Nadmořská výška: {{logPoint?.altitude}} m nad mořem</p>
+    <p>Rychlost: {{logPoint?.speed}} m/s</p>
+    <p>Síla signálu: {{logPoint?.dbm}}</p>
+    <p>Mobilní kód země: {{logPoint?.mcc}}</p>
+    <p>Kód mobilního oprátora: {{logPoint?.mnc}}</p>
+    <p>TA - Časový předstih signálu: {{logPoint?.ta}}</p>
+    <p>Směr pohybu: {{logPoint?.bearing}}°</p>
+    <p>Typ sítě: {{logPoint?.netType}}</p>
+</div>
