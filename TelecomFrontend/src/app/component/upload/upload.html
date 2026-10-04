@@ -1,1 +1,25 @@
-<p>upload works!</p>
+<div class="upload-container">
+    <h2>Nahrát výlet</h2>
+
+    <p>
+        @if (!fileName1) {
+            Nahrát soubor.
+        } @else if (!fileName2) {
+            Je potřeba nahrát jak CSV tak GPX soubor. 
+        } @else {
+            {{ fileName1 }} & {{ fileName2 }}
+        }
+        
+        <button mat-icon-button (click)="fileUpload.click()">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+    </p>
+
+    <input 
+        #fileUpload
+        type="file"
+        style="display: none;"
+        (change)="onFileSelected($event)"
+        multiple>
+
+</div>
