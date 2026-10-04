@@ -24,7 +24,7 @@
   z-index: 10;
 }
 
-.modal-overlay {
+.upload-layer {
   position: absolute;
   top: 0;
   left: 0;
