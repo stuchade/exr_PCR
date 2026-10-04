@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TelecomBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+447202694bb711dcb611a8e1cb6524f9c28e23de")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a40b119c8861c869c49efc961951c7376409bfb")]
 [assembly: System.Reflection.AssemblyProductAttribute("TelecomBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TelecomBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
