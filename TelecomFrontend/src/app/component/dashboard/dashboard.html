@@ -1,14 +1,14 @@
 <div class="dashboard-conteiner">
     <div class="sidebar-layer">
-        <app-logs (openUload)="isUploadOpen = true" (tripSelected)="selectedId = $event"></app-logs>
+        <app-logs #logs (openUpload)="isUploadOpen = true" (tripSelected)="selectedId = $event"></app-logs>
     </div>
 
     <app-map class="map-layer" [tripId]="selectedId" (point)="selectedPoint = $event"></app-map>
 
 
     @if (isUploadOpen) {
-        <div class="modal-overlay">
-            <app-upload (closeModal)="isUploadOpen = false"></app-upload>
+        <div class="upload-layer">
+            <app-upload (uploadCompleted)="isUploadOpen = false; logs.reloadLogs()"></app-upload>
         </div>
 
     }
