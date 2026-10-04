@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -16,36 +16,34 @@ interface LogButton {
   standalone: true,
   imports: [MatButtonModule, MatDividerModule, MatIconModule],
 })
-export class Logs implements OnInit {
+export class Logs {
   private http = inject(HttpClient);
-  buttons: LogButton[] = [];
+
+  buttons = signal<LogButton[]>([]);
+  openUpload = output<void>();
 
   ngOnInit(): void {
-      this.loadLogsFromBackend();
+    this.loadLogsFromBackend();
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const selectedFile = input.files[0];
-      console.log('Selected file:', selectedFile.name);
-    }
+  reloadLogs(): void {
+    this.loadLogsFromBackend();
   }
 
   private loadLogsFromBackend(): void {
-    this.buttons = [];
     this.http.get<any[]>(`http://localhost:5065/api/logs`).subscribe({
       next: (logs) => {
         if (!logs || logs.length === 0) {
           console.info("No logs!")
+          this.buttons.set([]);
+          return;
         }
-        logs.forEach((log) => {
-          this.buttons.push({
-            text: log.tripName,
-            action: () => this.handleButtonClick(log.id)
-          });
-        });
-        
+        const newButtons = logs.map((log) => ({
+          text: log.tripName,
+          action: () => this.handleButtonClick(log.id)
+        }));
+
+        this.buttons.set(newButtons);
       },
       error: (err) => {
         console.error('Error uploading logs from backend:', err);
