@@ -4,7 +4,7 @@
     </div>
     
     <div class="logs-list">
-        @for (btn of buttons; track btn) {
+        @for (btn of buttons(); track $index) {
             <button matButton="elevated" class="log-button" (click)="btn.action()">
                 {{ btn.text }}
             </button>
@@ -15,15 +15,9 @@
     
     
 
-    <button mat-icon-button (click)="fileInput.click()">
+    <button mat-icon-button (click)="openUpload.emit()">
         <mat-icon>add</mat-icon>
     </button>
-
-    <input 
-        #fileInput
-        type="file"
-        style="display: none;"
-        (change)="onFileSelected($event)">
 
     
 
