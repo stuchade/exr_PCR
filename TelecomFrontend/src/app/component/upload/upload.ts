@@ -15,9 +15,11 @@ export class Upload {
   private http = inject(HttpClient);
 
   uploadCompleted = output<void>();
+  close = output<void>();
 
   fileName1 = '';
   fileName2 = '';
+  correctFile = true;
 
  // DO HERE ERROR CASE IF REALLY DIFFERENT FILES
   onFileSelected(event: Event): void {
@@ -27,6 +29,11 @@ export class Upload {
     if (input.files && input.files.length == 1) {
       const file1 = input.files[0];
       this.fileName1 = file1.name;
+      if (!file1.name.toLowerCase().endsWith('.csv') && !file1.name.toLowerCase().endsWith('.gpx')) {
+        this.correctFile = false;
+        console.error('Wrong file type:', this.fileName1);
+      }
+      
       console.log('One file missing!');
     } else if (input.files && input.files.length == 2) {
       var file1 = input.files[0];
@@ -34,21 +41,27 @@ export class Upload {
       this.fileName1 = file1.name;
       this.fileName2 = file2.name;
 
-      const csvFile = file1.name.toLowerCase().endsWith('.csv') ? file1 : file2;
-      const gpxFile = file1.name.toLowerCase().endsWith('.gpx') ? file1 : file2;
-      
-      formData.append('CSVFile', csvFile);
-      formData.append('GPXFile', gpxFile);
+      if (!file1.name.toLowerCase().endsWith('.csv') && !file1.name.toLowerCase().endsWith('.gpx') || 
+      (!file2.name.toLowerCase().endsWith('.csv') && !file2.name.toLowerCase().endsWith('.gpx'))) {
+        this.correctFile = false;
+        console.error('Wrong file type:', this.fileName1, this.fileName2);
+      } else {
+        const csvFile = file1.name.toLowerCase().endsWith('.csv') ? file1 : file2;
+        const gpxFile = file1.name.toLowerCase().endsWith('.gpx') ? file1 : file2;
+        
+        formData.append('CSVFile', csvFile);
+        formData.append('GPXFile', gpxFile);
 
-      this.http.post<any[]>(`http://localhost:5065/api/logs/upload`, formData).subscribe({
-        next: response => {
-          console.log('The trip was uploaded successfully:', response);
-          this.uploadCompleted.emit();
-        },
-        error: error => {
-          console.error('Error uloading:', error);
-        }
-      });
+        this.http.post<any[]>(`http://localhost:5065/api/logs/upload`, formData).subscribe({
+          next: response => {
+            console.log('The trip was uploaded successfully:', response);
+            this.uploadCompleted.emit();
+          },
+          error: error => {
+            console.error('Error uloading:', error);
+          }
+        });
+      }
     }
   }
 }
