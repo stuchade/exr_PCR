@@ -8,14 +8,19 @@
 
     @if (isUploadOpen) {
         <div class="upload-layer">
-            <app-upload (uploadCompleted)="isUploadOpen = false; logs.reloadLogs()"></app-upload>
+            <app-upload 
+            (uploadCompleted)="isUploadOpen = false; logs.reloadLogs()" 
+            (close)="isUploadOpen = false"></app-upload>
         </div>
 
     }
 
     @if (selectedPoint) {
         <div class="detail-layer">
-            <app-point-detail [pnt]="selectedPoint"></app-point-detail>
+            <app-point-detail
+                [pnt]="selectedPoint"
+                (closeDetail)="selectedPoint = null">
+            </app-point-detail>
         </div>
     }
 </div>
