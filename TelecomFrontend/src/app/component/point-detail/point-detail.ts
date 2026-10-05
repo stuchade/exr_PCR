@@ -1,4 +1,6 @@
 import { Component, input, output, effect } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 interface LogPoint {
   id: number;
@@ -20,13 +22,14 @@ interface LogPoint {
 }
 
 @Component({
-  imports: [],
+  imports: [MatButtonModule, MatIcon],
   selector: 'app-point-detail',
   styleUrl: './point-detail.css',
   templateUrl: './point-detail.html',
 })
 export class PointDetail {
   pnt = input<LogPoint>();
+  closeDetail = output<void>();
 
   logPoint: LogPoint | null = null;
 

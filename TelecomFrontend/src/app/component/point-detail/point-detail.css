@@ -5,3 +5,10 @@
     padding: 16px;
     box-shadow: 0 16px 16px rgba(0, 0, 0, 0.1);
 }
+
+.point-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}

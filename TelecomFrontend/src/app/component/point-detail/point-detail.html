@@ -1,5 +1,11 @@
 <div class="point-detail-cotainer">
-    <h3>Detail výletu</h3>
+    <div class="point-detail-header">
+        <h3>Detail výletu</h3>
+        <button mat-icon-button (click)="closeDetail.emit()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    
     <p>Výlet: {{logPoint?.tripId}}</p>
     <p>Datum měření bodu: {{logPoint?.measuredAtGps}}</p>
     <p>Souřadnice bodu: {{logPoint?.lat}} | {{logPoint?.lon}}</p>
