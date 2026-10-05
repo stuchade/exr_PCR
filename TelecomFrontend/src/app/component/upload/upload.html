@@ -1,9 +1,17 @@
 <div class="upload-container">
-    <h2>Nahrát výlet</h2>
+    <div class="upload-header">
+        <h2>Nahrát výlet</h2>
+        <button class="upload-close-btn" mat-icon-button (click)="close.emit()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    
 
     <p>
         @if (!fileName1) {
             Nahrát soubor.
+        } @else if (!correctFile) {
+            Špatný typ souboru. Pouze CSV a GPX.
         } @else if (!fileName2) {
             Je potřeba nahrát jak CSV tak GPX soubor. 
         } @else {
