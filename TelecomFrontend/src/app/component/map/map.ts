@@ -21,7 +21,6 @@ export class Map implements AfterViewInit {
     });
   }
 
-
   private map: L.Map | undefined;
   private http = inject(HttpClient);
 
@@ -80,11 +79,13 @@ export class Map implements AfterViewInit {
 
         points.forEach((point) => {
           pathCoordinates.push([point.lat, point.lon]);
+          let cellIdStr = String(point.cellId);
+          let colors = this.getColorsForPoints(cellIdStr);
 
           L.circleMarker([point.lat, point.lon], {
             radius: 6,
-            color: '#0f1c54',
-            fillColor: '#2d2878',
+            color: colors,
+            fillColor: colors,
             fillOpacity: 0.9,
             weight: 2
           }).addTo(this.tripLayer)
@@ -108,6 +109,21 @@ export class Map implements AfterViewInit {
     setTimeout(() => {
       this.initMap();
     });
+  }
+
+  private getColorsForPoints(cellIdStr: string): string {
+    let colors: string = 'rgb(';
+    for (let i = 0; i < 3; i++) {
+      let numStr = cellIdStr.substring(i*3, i*3 + 3);
+      let num = Number(numStr); 
+      let color = String(num % 255);
+      if (i < 2) {
+        colors += color + ', ';
+      } else {
+        colors += color + ')';
+      }
+    }
+    return colors;
   }
   
 }

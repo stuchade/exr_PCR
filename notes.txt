@@ -1,2 +1,20 @@
-Stáhla jsem si .NET z internetu. Pomocí příkazu dotnet new webapi -o TelecomBackend jsem si vytvořila složku TelecomBacked s šablonou na jendoduchou webovku.
-V C# jsem si vytvořila dvě tabulky pro databázi.
+Stáhla jsem si .NET z internetu. Pomocí příkazu dotnet new webapi -o TelecomBackend jsem si vytvořila složku 
+TelecomBacked s šablonou na jendoduchou webovku. V SQL jsem si vytvořila dvě tabulky pro databázi. Vytvořila 
+jsem si třídu pro zpracování csv a gpx dat. Dále třídá pro databázi, kde jsem si udělala metody pro práci
+s databází. Dále jsem si vytvořila constroller pro komunikaci s frontendem.
+
+Pomocí ng new TelecomFrontend jsem si vytvořila složku. do ní pak ng generate component component/.. jsem si 
+vytvořila jednotlivé komponenty. Logs ukazuje výletu a dá se pomocí plus načíst nový výlet. Tím se přejde do 
+další komponenty Upload, která dokáže přijmout soubory a data nahrát do databáze. Pokud se v logs klikne na 
+výlet, cesta se ukáže na mapě, kde se vypíší i všechny GPS body. Pokud se na ně klikne, ukáží se jednotlivé 
+informace o bodu.
+
+Databáze SQLite.
+
+Mapa leaflet.
+
+Aplikace: GPS: GPS Logger
+          BTS: Tower Collector
+
+
+Co nemám ošetřeno: Pokud se vloží ten stejný výlet několikrát.

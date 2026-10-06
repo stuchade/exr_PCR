@@ -21,10 +21,10 @@ export class Upload {
   fileName2 = '';
   correctFile = true;
 
- // DO HERE ERROR CASE IF REALLY DIFFERENT FILES
   onFileSelected(event: Event): void {
     const formData = new FormData();
     const input = event.target as HTMLInputElement;
+    this.correctFile = true;
 
     if (input.files && input.files.length == 1) {
       const file1 = input.files[0];
